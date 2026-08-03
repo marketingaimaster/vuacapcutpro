@@ -1,0 +1,6 @@
+{
+  "name": "Vua Capcutpro - Nâng Cấp CapCut Pro",
+  "description": "Trang landing page nâng cấp tài khoản CapCut Pro chính hãng giá rẻ hơn 80%, bảo hành trọn thời gian sử dụng bởi Vua Capcutpro Tuấn Anh.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
