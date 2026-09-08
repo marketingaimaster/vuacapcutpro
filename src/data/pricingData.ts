@@ -14,7 +14,8 @@ export const pricingColumns: PricingColumn[] = [
       'Đăng nhập không mất dữ liệu cũ',
       'Dung lượng 1TB, Credit AI 650/tháng',
       'Full toàn bộ tính năng Pro',
-      'Bảo hành, lỗi 1 đổi 1, hỗ trợ 24/7'
+      'Bảo hành, lỗi 1 đổi 1, hỗ trợ 24/7',
+      'Tặng kèm bộ tài nguyên edit video trị giá hơn 200k'
     ],
     options: [
       {
@@ -58,7 +59,8 @@ export const pricingColumns: PricingColumn[] = [
       'Đăng nhập không mất dữ liệu cũ',
       'Dung lượng 1TB, Credit AI 650/tháng',
       'Full toàn bộ tính năng Pro',
-      'Bảo hành, lỗi 1 đổi 1, hỗ trợ 24/7'
+      'Bảo hành, lỗi 1 đổi 1, hỗ trợ 24/7',
+      'Tặng kèm bộ tài nguyên edit video trị giá hơn 200k'
     ],
     options: [
       {
@@ -102,7 +104,8 @@ export const pricingColumns: PricingColumn[] = [
       'Đăng nhập không mất dữ liệu cũ',
       'Dung lượng 1TB, Credit AI 650/tháng',
       'Full toàn bộ tính năng Pro',
-      'Bảo hành, lỗi 1 đổi 1, hỗ trợ 24/7'
+      'Bảo hành, lỗi 1 đổi 1, hỗ trợ 24/7',
+      'Tặng kèm bộ tài nguyên edit video trị giá hơn 200k'
     ],
     options: [
       {

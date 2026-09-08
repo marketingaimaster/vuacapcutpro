@@ -47,3 +47,16 @@ export interface OrderSelection {
   columnTitle: string;
   option: PricingOption;
 }
+
+export interface VideoItem {
+  id: string;
+  title: string;
+  category: 'all' | 'mau-tiktok' | 'review-pro' | 'huong-dan' | 'ai-voice';
+  thumbnail: string;
+  videoUrl: string; // Direct mp4 or video link
+  tiktokUrl: string; // Link to tiktok / reels
+  views: string;
+  likes: string;
+  author: string;
+  tags: string[];
+}

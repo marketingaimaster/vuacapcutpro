@@ -51,9 +51,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectPricing }) => {
           <button onClick={() => scrollToSection('sec-tinh-nang')} className="hover:text-amber-300 transition-colors cursor-pointer py-1">
             Tính Năng Pro
           </button>
-          <button onClick={() => scrollToSection('sec-khach-hang')} className="hover:text-amber-300 transition-colors cursor-pointer py-1">
-            Đánh Giá ({'999+'})
-          </button>
           <button onClick={() => scrollToSection('sec-huong-dan')} className="hover:text-amber-300 transition-colors cursor-pointer py-1">
             Hướng Dẫn Mua
           </button>
@@ -107,12 +104,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectPricing }) => {
             className="w-full text-left py-2.5 px-3 rounded-lg text-purple-100 hover:bg-purple-900/40 font-medium"
           >
             ✨ Tính Năng Mở Khóa Pro
-          </button>
-          <button
-            onClick={() => scrollToSection('sec-khach-hang')}
-            className="w-full text-left py-2.5 px-3 rounded-lg text-purple-100 hover:bg-purple-900/40 font-medium"
-          >
-            ⭐ Khách Hàng Đánh Giá (999+)
           </button>
           <button
             onClick={() => scrollToSection('sec-huong-dan')}

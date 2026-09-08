@@ -3,7 +3,6 @@ import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { FeatureHighlights } from './components/FeatureHighlights';
 import { PricingSection } from './components/PricingSection';
-import { CustomerReviews } from './components/CustomerReviews';
 import { OrderGuide } from './components/OrderGuide';
 import { FAQSection } from './components/FAQSection';
 import { FooterSection } from './components/FooterSection';
@@ -48,9 +47,6 @@ export default function App() {
 
         {/* Section 3: Hướng Dẫn Mua Hàng */}
         <OrderGuide />
-
-        {/* Section 4: Khách Hàng Tin Dùng (Testimonials) */}
-        <CustomerReviews />
 
         {/* Section 5: FAQ - Câu Hỏi Thường Gặp */}
         <FAQSection />

@@ -109,12 +109,24 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectOption }
                     Quyền Lợi Gói:
                   </p>
                   <ul className="space-y-2 text-xs text-purple-200">
-                    {col.features.map((feat, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <Check className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                        <span>{feat}</span>
-                      </li>
-                    ))}
+                    {col.features.map((feat, idx) => {
+                      const isGift = feat.toLowerCase().includes('tặng kèm') || feat.toLowerCase().includes('tặng');
+                      return (
+                        <li
+                          key={idx}
+                          className={`flex items-start gap-2 ${
+                            isGift ? 'text-amber-300 font-semibold bg-amber-500/10 -mx-1.5 px-1.5 py-1 rounded-lg border border-amber-500/30' : ''
+                          }`}
+                        >
+                          {isGift ? (
+                            <Gift className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
+                          ) : (
+                            <Check className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+                          )}
+                          <span>{feat}</span>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
 
