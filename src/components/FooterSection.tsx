@@ -144,6 +144,39 @@ export const FooterSection: React.FC = () => {
 
         </div>
 
+        {/* SEO Keywords Topic Hub */}
+        <div className="pt-8 pb-4 text-left border-t border-purple-900/40">
+          <div className="text-[11px] font-bold uppercase tracking-wider text-purple-400 mb-2.5">
+            Dịch vụ & Từ khóa tìm kiếm:
+          </div>
+          <div className="flex flex-wrap gap-2 text-xs text-purple-300/80">
+            <span className="px-2.5 py-1 rounded-lg bg-purple-950/60 border border-purple-800/40 hover:text-white transition-colors">
+              Capcut Pro giá rẻ
+            </span>
+            <span className="px-2.5 py-1 rounded-lg bg-purple-950/60 border border-purple-800/40 hover:text-white transition-colors">
+              Mua Capcut Pro Giá Rẻ
+            </span>
+            <span className="px-2.5 py-1 rounded-lg bg-purple-950/60 border border-purple-800/40 hover:text-white transition-colors">
+              Nâng cấp Capcut Pro giá rẻ
+            </span>
+            <span className="px-2.5 py-1 rounded-lg bg-purple-950/60 border border-purple-800/40 hover:text-white transition-colors">
+              Mua Tài khoản Capcut Pro giá rẻ
+            </span>
+            <span className="px-2.5 py-1 rounded-lg bg-purple-950/60 border border-purple-800/40 hover:text-white transition-colors">
+              Mua Capcut Pro giá rẻ cho điện thoại
+            </span>
+            <span className="px-2.5 py-1 rounded-lg bg-purple-950/60 border border-purple-800/40 hover:text-white transition-colors">
+              Mua Capcut Pro giá rẻ cho máy tính/PC
+            </span>
+            <span className="px-2.5 py-1 rounded-lg bg-purple-950/60 border border-purple-800/40 hover:text-white transition-colors">
+              Tài khoản CapCut Pro bản quyền 1 năm
+            </span>
+            <span className="px-2.5 py-1 rounded-lg bg-purple-950/60 border border-purple-800/40 hover:text-white transition-colors">
+              Vua Capcutpro Tuấn Anh
+            </span>
+          </div>
+        </div>
+
         {/* Copyright Footer */}
         <div className="pt-8 text-center text-xs text-purple-400/80">
           <p>© 2026 Vua Capcutpro Tuấn Anh. Bản quyền trang tin nâng cấp CapCut Pro chính hãng.</p>

@@ -74,17 +74,29 @@ export const HeroSection: React.FC = () => {
 
         {/* Headline */}
         <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white max-w-5xl mx-auto leading-tight sm:leading-tight mb-5">
-          Nâng Cấp CapCut Pro Chính Hãng Mở Khóa Mọi Tính Năng
+          Mua Capcut Pro Giá Rẻ Bản Quyền
           <span className="block mt-2 sm:mt-3 text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 underline decoration-yellow-500/50 decoration-wavy">
-            Giá Rẻ Hơn 80% Trên App Capcut!
+            Cho Điện Thoại & Máy Tính Rẻ Hơn 80%
           </span>
         </h1>
 
         {/* Sub-headline */}
-        <p className="text-base sm:text-xl text-purple-100/90 font-normal max-w-3xl mx-auto leading-relaxed mb-8">
-          Cam kết ổn định, bảo hành trọn thời gian sử dụng. Nâng tầm video trên các nền tảng Tiktok, Facebook, Youtube,... của bạn ngay hôm nay cùng{' '}
+        <p className="text-base sm:text-lg lg:text-xl text-purple-100/90 font-normal max-w-3xl mx-auto leading-relaxed mb-6">
+          Chuyên cung cấp dịch vụ <strong className="text-white font-bold">mua tài khoản Capcut Pro giá rẻ</strong> và <strong className="text-white font-bold">nâng cấp Capcut Pro giá rẻ</strong> chính hãng 100%. Mở khóa trọn bộ tính năng Pro cho cả <span className="text-amber-300 font-semibold">Điện thoại (iOS/Android)</span> và <span className="text-amber-300 font-semibold">Máy tính/PC (Windows/Mac)</span> cùng{' '}
           <strong className="text-yellow-300 font-bold underline">Vua Capcutpro Tuấn Anh</strong>.
         </p>
+
+        {/* Device Compatibility Quick Badges for Search Intent Matching */}
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-8">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-purple-950/80 border border-purple-700/60 text-xs sm:text-sm font-bold text-purple-200 shadow-sm">
+            <span className="text-base">📱</span>
+            <span>Mua Capcut Pro Giá Rẻ Cho Điện Thoại</span>
+          </div>
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-purple-950/80 border border-purple-700/60 text-xs sm:text-sm font-bold text-purple-200 shadow-sm">
+            <span className="text-base">💻</span>
+            <span>Mua Capcut Pro Giá Rẻ Cho Máy Tính / PC</span>
+          </div>
+        </div>
 
         {/* Centerpiece: CapCut Pro 3D Vinyl Sticker Decorated Display */}
         <div className="mb-9 flex flex-col items-center justify-center">

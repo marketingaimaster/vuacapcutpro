@@ -32,10 +32,10 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectOption }
             <span>BẢNG GIÁ ƯU ĐÃI ĐẶC BIỆT - TIẾT KIỆM ĐẾN 80%</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-            Chọn Gói CapCut Pro Phù Hợp
+            Bảng Giá Mua Tài Khoản & Nâng Cấp Capcut Pro Giá Rẻ
           </h2>
           <p className="text-purple-200 text-sm sm:text-base mt-3 leading-relaxed">
-            Cam kết ổn định, bảo hành đủ thời hạn gói, lỗi 1 đổi 1, hỗ trợ 24/7.
+            Áp dụng trọn vẹn cho cả <strong className="text-yellow-300">Điện thoại (iOS/Android)</strong> và <strong className="text-yellow-300">Máy tính/PC (Windows/Mac)</strong>. Cam kết ổn định, bảo hành đủ thời hạn gói, lỗi 1 đổi 1 siêu tốc.
           </p>
 
           {/* Filter Tabs */}

@@ -22,8 +22,14 @@ export const faqList: FAQItem[] = [
   {
     id: 'faq-4',
     category: 'thiet-bi',
-    question: 'Tài khoản CapCut Pro sử dụng được trên những thiết bị nào?',
-    answer: 'Tài khoản hỗ trợ đầy đủ trên tất cả các nền tảng: Điện thoại iPhone/Android, Máy tính Windows/Macbook, Máy tính bảng iPad. Bạn có thể sử dụng linh hoạt tùy theo gói (1 thiết bị đối với Gói Phổ Thông, hoặc 2 thiết bị đối với Gói Tối Đa & Gói Cao Cấp Mail Chính Chủ).'
+    question: 'Mua Capcut Pro giá rẻ cho điện thoại và máy tính/PC có dùng chung được không?',
+    answer: 'Có! Khi bạn mua tài khoản Capcut Pro giá rẻ hoặc nâng cấp Capcut Pro giá rẻ tại shop, tài khoản hỗ trợ đầy đủ trên tất cả các nền tảng: Điện thoại iPhone/Android, Máy tính PC Windows và Macbook/macOS. Với Gói Tối Đa và Gói Mail Chính Chủ, bạn có thể đăng nhập đồng thời 2 thiết bị (ví dụ 1 điện thoại + 1 máy tính PC) rất tiện lợi cho công việc dựng phim.'
+  },
+  {
+    id: 'faq-8',
+    category: 'bao-hanh',
+    question: 'Tại sao nên mua tài khoản Capcut Pro giá rẻ và nâng cấp tại Vua Capcutpro Tuấn Anh?',
+    answer: 'Khi mua Capcut Pro giá rẻ tại Vua Capcutpro Tuấn Anh, bạn tiết kiệm đến 80% so với giá gốc mua qua App Store/Google Play, kích hoạt nhanh chỉ trong 1-3 phút, hỗ trợ kỹ thuật tận tâm 24/7 và cam kết bảo hành 1 đổi 1 trong suốt thời gian gói dịch vụ.'
   },
   {
     id: 'faq-5',
