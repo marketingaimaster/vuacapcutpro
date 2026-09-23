@@ -3,6 +3,7 @@ import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { FeatureHighlights } from './components/FeatureHighlights';
 import { PricingSection } from './components/PricingSection';
+import { BonusGiftSection } from './components/BonusGiftSection';
 import { OrderGuide } from './components/OrderGuide';
 import { FAQSection } from './components/FAQSection';
 import { FooterSection } from './components/FooterSection';
@@ -47,6 +48,9 @@ export default function App() {
 
         {/* Section 3: Hướng Dẫn Mua Hàng */}
         <OrderGuide />
+
+        {/* Section 4: Quà Tặng Độc Quyền (Kho Tài Nguyên 200k) */}
+        <BonusGiftSection onClaimGift={scrollToPricing} />
 
         {/* Section 5: FAQ - Câu Hỏi Thường Gặp */}
         <FAQSection />

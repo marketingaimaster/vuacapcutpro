@@ -27,8 +27,11 @@ export const OrderGuide: React.FC = () => {
   ];
 
   return (
-    <section id="sec-huong-dan" className="py-16 sm:py-24 bg-purple-gradient border-b border-purple-900/40 relative">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="sec-huong-dan" className="py-16 sm:py-24 bg-[#0f0728] relative overflow-hidden">
+      {/* Decorative Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-purple-600/10 rounded-full blur-[140px] pointer-events-none"></div>
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">

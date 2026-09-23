@@ -19,7 +19,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectOption }
   ];
 
   return (
-    <section id="sec-bang-gia" className="py-16 sm:py-24 bg-purple-gradient relative overflow-hidden">
+    <section id="sec-bang-gia" className="py-16 sm:py-24 bg-[#0f0728] relative overflow-hidden">
       {/* Decorative Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-purple-600/10 rounded-full blur-[140px] pointer-events-none"></div>
 
@@ -200,6 +200,17 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectOption }
               </div>
             );
           })}
+        </div>
+
+        {/* Bonus Resource Highlight Banner */}
+        <div className="mt-10 text-center">
+          <a
+            href="#sec-qua-tang"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-gradient-to-r from-amber-500/20 via-pink-500/20 to-purple-600/20 hover:from-amber-500/30 hover:to-purple-600/30 border border-amber-400/50 text-amber-300 text-xs sm:text-sm font-bold shadow-lg transition-all hover:scale-105 cursor-pointer"
+          >
+            <Gift className="w-4 h-4 text-amber-400 animate-bounce" />
+            <span>TẤT CẢ CÁC GÓI ĐỀU ĐƯỢC TẶNG KÈM KHO TÀI NGUYÊN VIP 200K (10 THƯ MỤC) — XEM CHI TIẾT BÊN DƯỚI ↓</span>
+          </a>
         </div>
 
       </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Crown, Zap, ShieldCheck, PhoneCall, Menu, X, Sparkles } from 'lucide-react';
+import { Crown, Zap, ShieldCheck, PhoneCall, Menu, X, Sparkles, Gift } from 'lucide-react';
 
 interface NavbarProps {
   onSelectPricing: () => void;
@@ -48,11 +48,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectPricing }) => {
           <button onClick={() => scrollToSection('sec-bang-gia')} className="hover:text-amber-300 transition-colors cursor-pointer py-1">
             Bảng Giá
           </button>
-          <button onClick={() => scrollToSection('sec-tinh-nang')} className="hover:text-amber-300 transition-colors cursor-pointer py-1">
-            Tính Năng Pro
-          </button>
           <button onClick={() => scrollToSection('sec-huong-dan')} className="hover:text-amber-300 transition-colors cursor-pointer py-1">
             Hướng Dẫn Mua
+          </button>
+          <button onClick={() => scrollToSection('sec-qua-tang')} className="hover:text-amber-200 text-amber-300 font-bold transition-colors cursor-pointer py-1 flex items-center gap-1.5 bg-amber-950/40 px-2.5 py-1 rounded-lg border border-amber-500/30">
+            <Gift className="w-3.5 h-3.5 text-amber-400" />
+            <span>Quà Tặng 200K</span>
+          </button>
+          <button onClick={() => scrollToSection('sec-tinh-nang')} className="hover:text-amber-300 transition-colors cursor-pointer py-1">
+            Tính Năng Pro
           </button>
           <button onClick={() => scrollToSection('sec-faq')} className="hover:text-amber-300 transition-colors cursor-pointer py-1">
             Câu Hỏi FAQ
@@ -100,16 +104,26 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectPricing }) => {
             <span className="text-xs text-amber-400 bg-amber-950/80 px-2 py-0.5 rounded border border-amber-500/40">Giảm 80%</span>
           </button>
           <button
-            onClick={() => scrollToSection('sec-tinh-nang')}
-            className="w-full text-left py-2.5 px-3 rounded-lg text-purple-100 hover:bg-purple-900/40 font-medium"
-          >
-            ✨ Tính Năng Mở Khóa Pro
-          </button>
-          <button
             onClick={() => scrollToSection('sec-huong-dan')}
             className="w-full text-left py-2.5 px-3 rounded-lg text-purple-100 hover:bg-purple-900/40 font-medium"
           >
             🚀 Quy Trình 3 Bước Kích Hoạt
+          </button>
+          <button
+            onClick={() => scrollToSection('sec-qua-tang')}
+            className="w-full text-left py-2.5 px-3 rounded-lg text-amber-300 bg-amber-950/40 border border-amber-500/30 hover:bg-amber-900/40 font-bold flex items-center justify-between"
+          >
+            <span className="flex items-center gap-2">
+              <Gift className="w-4 h-4 text-amber-400" />
+              <span>🎁 Quà Tặng Kho Tài Nguyên 200K</span>
+            </span>
+            <span className="text-xs text-emerald-400 font-extrabold">Miễn Phí</span>
+          </button>
+          <button
+            onClick={() => scrollToSection('sec-tinh-nang')}
+            className="w-full text-left py-2.5 px-3 rounded-lg text-purple-100 hover:bg-purple-900/40 font-medium"
+          >
+            ✨ Tính Năng Mở Khóa Pro
           </button>
           <button
             onClick={() => scrollToSection('sec-faq')}
