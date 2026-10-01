@@ -54,6 +54,9 @@ export const AffiliateModal: React.FC<AffiliateModalProps> = ({ isOpen, onClose 
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [successMessage, setSuccessMessage] = useState<string>('');
   const [adminPinUnlocked, setAdminPinUnlocked] = useState<boolean>(false);
+  const [showAdminPinModal, setShowAdminPinModal] = useState<boolean>(false);
+  const [adminPinInput, setAdminPinInput] = useState<string>('');
+  const [adminPinError, setAdminPinError] = useState<string>('');
   const [unauthorizedDomain, setUnauthorizedDomain] = useState<string | null>(null);
   const [domainCopied, setDomainCopied] = useState<boolean>(false);
   
@@ -348,29 +351,34 @@ export const AffiliateModal: React.FC<AffiliateModalProps> = ({ isOpen, onClose 
           </div>
 
           <div className="flex items-center gap-2">
-            <button
-              onClick={() => {
-                if (profile?.role === 'admin' || currentUser?.email?.toLowerCase() === 'marketingaimaster@gmail.com' || adminPinUnlocked) {
-                  setActiveTab(activeTab === 'admin' ? 'overview' : 'admin');
-                } else {
-                  const pin = window.prompt('Nhập mã PIN Quản Trị Chủ Shop (Mặc định: 8888 hoặc đăng nhập email marketingaimaster@gmail.com):');
-                  if (pin === '8888') {
-                    setAdminPinUnlocked(true);
-                    setActiveTab('admin');
-                  } else if (pin !== null) {
-                    setErrorMessage('Mã PIN không đúng.');
-                  }
-                }
-              }}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all border cursor-pointer ${
-                activeTab === 'admin'
-                  ? 'bg-amber-400 text-purple-950 border-amber-300 font-black shadow-md'
-                  : 'bg-purple-900/60 hover:bg-amber-950/70 text-amber-300 border-amber-500/40'
-              }`}
-            >
-              <Crown className="w-3.5 h-3.5 text-amber-400" />
-              <span>Chủ Shop (Admin)</span>
-            </button>
+            {/* Admin entry - only shows badge when authenticated, or discrete lock without any hints */}
+            {(profile?.role === 'admin' || currentUser?.email?.toLowerCase() === 'marketingaimaster@gmail.com' || adminPinUnlocked) ? (
+              <button
+                onClick={() => setActiveTab(activeTab === 'admin' ? 'overview' : 'admin')}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all border cursor-pointer ${
+                  activeTab === 'admin'
+                    ? 'bg-amber-400 text-purple-950 border-amber-300 font-black shadow-md'
+                    : 'bg-purple-900/60 hover:bg-amber-950/70 text-amber-300 border-amber-500/40'
+                }`}
+              >
+                <Crown className="w-3.5 h-3.5 text-amber-400" />
+                <span>{activeTab === 'admin' ? 'Quay lại CTV' : 'Quản Trị Shop'}</span>
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => {
+                  setAdminPinError('');
+                  setAdminPinInput('');
+                  setShowAdminPinModal(true);
+                }}
+                className="p-2 rounded-xl text-purple-400/80 hover:text-amber-400 hover:bg-purple-900/50 transition-colors cursor-pointer"
+                title="Bảo mật quản trị"
+                aria-label="Xác thực Quản trị"
+              >
+                <Lock className="w-4 h-4" />
+              </button>
+            )}
 
             <button
               onClick={onClose}
@@ -966,30 +974,20 @@ export const AffiliateModal: React.FC<AffiliateModalProps> = ({ isOpen, onClose 
                   Lịch Sử Rút ({withdrawals.length})
                 </button>
 
-                {/* Admin Control Tab */}
-                <button
-                  onClick={() => {
-                    if (profile?.role === 'admin' || currentUser?.email?.toLowerCase() === 'marketingaimaster@gmail.com' || adminPinUnlocked) {
-                      setActiveTab('admin');
-                    } else {
-                      const pin = window.prompt('Nhập mã PIN Quản Trị Chủ Shop (Mặc định: 8888):');
-                      if (pin === '8888') {
-                        setAdminPinUnlocked(true);
-                        setActiveTab('admin');
-                      } else if (pin !== null) {
-                        setErrorMessage('Mã PIN không đúng.');
-                      }
-                    }
-                  }}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ml-auto ${
-                    activeTab === 'admin'
-                      ? 'bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-400 text-purple-950 shadow-md font-black'
-                      : 'text-amber-300 hover:text-white bg-amber-950/60 border border-amber-500/40'
-                  }`}
-                >
-                  <Crown className="w-3.5 h-3.5 text-amber-400" />
-                  <span>👑 Quản Trị Shop</span>
-                </button>
+                {/* Admin Control Tab - Only rendered when user is authenticated as Admin or unlocked */}
+                {(profile?.role === 'admin' || currentUser?.email?.toLowerCase() === 'marketingaimaster@gmail.com' || adminPinUnlocked) && (
+                  <button
+                    onClick={() => setActiveTab('admin')}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ml-auto cursor-pointer ${
+                      activeTab === 'admin'
+                        ? 'bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-400 text-purple-950 shadow-md font-black'
+                        : 'text-amber-300 hover:text-white bg-amber-950/60 border border-amber-500/40'
+                    }`}
+                  >
+                    <Crown className="w-3.5 h-3.5 text-amber-400" />
+                    <span>👑 Quản Trị Shop</span>
+                  </button>
+                )}
               </div>
 
               {/* TAB 1: OVERVIEW & INSTRUCTIONS */}
@@ -1407,6 +1405,90 @@ export const AffiliateModal: React.FC<AffiliateModalProps> = ({ isOpen, onClose 
             </a>
           </div>
         </div>
+
+        {/* Secure Admin PIN Verification Modal - No hints given */}
+        {showAdminPinModal && (
+          <div 
+            className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm animate-fadeIn"
+            onClick={() => setShowAdminPinModal(false)}
+          >
+            <div 
+              className="bg-[#170936] border-2 border-purple-500/80 rounded-2xl max-w-sm w-full p-5 shadow-2xl text-left space-y-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between border-b border-purple-800/60 pb-3">
+                <div className="flex items-center gap-2 text-white font-bold text-sm sm:text-base">
+                  <Lock className="w-4 h-4 text-amber-400" />
+                  <span>Xác thực Quản trị viên</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowAdminPinModal(false)}
+                  className="p-1 rounded-lg text-purple-400 hover:text-white hover:bg-purple-900/50 cursor-pointer"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              <form 
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (adminPinInput.trim() === '8888') {
+                    setAdminPinUnlocked(true);
+                    setActiveTab('admin');
+                    setShowAdminPinModal(false);
+                    setAdminPinInput('');
+                    setAdminPinError('');
+                  } else {
+                    setAdminPinError('Mã PIN bảo mật không chính xác.');
+                  }
+                }}
+                className="space-y-3.5"
+              >
+                <div>
+                  <label className="block text-xs font-semibold text-purple-200 mb-1.5">
+                    Nhập mã PIN bảo mật:
+                  </label>
+                  <input
+                    type="password"
+                    autoFocus
+                    required
+                    value={adminPinInput}
+                    onChange={(e) => {
+                      setAdminPinInput(e.target.value);
+                      setAdminPinError('');
+                    }}
+                    placeholder="••••"
+                    maxLength={10}
+                    className="w-full bg-purple-950/90 border border-purple-700/80 rounded-xl px-3.5 py-2.5 text-center text-lg tracking-widest text-amber-300 font-mono focus:outline-none focus:border-amber-400"
+                  />
+                  {adminPinError && (
+                    <p className="text-xs text-rose-400 mt-2 flex items-center gap-1.5">
+                      <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                      <span>{adminPinError}</span>
+                    </p>
+                  )}
+                </div>
+
+                <div className="flex items-center gap-2 pt-1">
+                  <button
+                    type="button"
+                    onClick={() => setShowAdminPinModal(false)}
+                    className="flex-1 py-2.5 rounded-xl bg-purple-900/60 hover:bg-purple-800 text-purple-300 hover:text-white text-xs font-bold transition-colors cursor-pointer"
+                  >
+                    Hủy
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-purple-950 text-xs font-black transition-all shadow-md cursor-pointer"
+                  >
+                    Xác nhận
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
