@@ -1,0 +1,79 @@
+{
+  "entities": {
+    "AffiliateProfile": {
+      "title": "Affiliate Profile",
+      "description": "Information and statistics for registered affiliate collaborator",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Auth UID of the affiliate user" },
+        "email": { "type": "string", "description": "Email address of the affiliate" },
+        "displayName": { "type": "string", "description": "Full name or nickname" },
+        "phone": { "type": "string", "description": "Zalo/Phone number for payout contact" },
+        "affiliateCode": { "type": "string", "description": "Unique referral code (e.g. VIP88, CAPCUTPRO)" },
+        "commissionRate": { "type": "number", "description": "Commission percentage (e.g. 18 to 24)" },
+        "balanceAvailable": { "type": "number", "description": "Available wallet balance for withdrawal in VND" },
+        "balancePending": { "type": "number", "description": "Pending commission balance in VND" },
+        "totalEarned": { "type": "number", "description": "Total lifetime commission earned in VND" },
+        "bankName": { "type": "string", "description": "Bank name (e.g. MB Bank, Vietcombank, Techcombank)" },
+        "bankAccountNumber": { "type": "string", "description": "Bank account number" },
+        "bankAccountName": { "type": "string", "description": "Bank account holder name (ALL CAPS)" },
+        "clicksCount": { "type": "number", "description": "Total unique link clicks" },
+        "ordersCount": { "type": "number", "description": "Total successful referral orders" },
+        "role": { "type": "string", "enum": ["affiliate", "admin"], "description": "User role" },
+        "createdAt": { "type": "string", "description": "ISO timestamp of registration" },
+        "updatedAt": { "type": "string", "description": "ISO timestamp of last update" }
+      },
+      "required": ["uid", "email", "affiliateCode", "role"]
+    },
+    "AffiliateOrder": {
+      "title": "Affiliate Referral Order",
+      "description": "Order tracked back to an affiliate partner",
+      "type": "object",
+      "properties": {
+        "affiliateUid": { "type": "string", "description": "UID of the affiliate who referred" },
+        "affiliateCode": { "type": "string", "description": "Referral code used" },
+        "customerName": { "type": "string", "description": "Customer name" },
+        "customerPhone": { "type": "string", "description": "Customer phone/Zalo" },
+        "planName": { "type": "string", "description": "Purchased plan (e.g. 1 Năm, Vĩnh Viễn)" },
+        "orderAmount": { "type": "number", "description": "Order revenue in VND" },
+        "commissionAmount": { "type": "number", "description": "Commission credited to affiliate in VND" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"], "description": "Order status" },
+        "createdAt": { "type": "string", "description": "ISO timestamp of order creation" }
+      },
+      "required": ["affiliateCode", "customerPhone", "planName", "orderAmount", "status"]
+    },
+    "WithdrawalRequest": {
+      "title": "Withdrawal Request",
+      "description": "Cash out commission balance to bank account",
+      "type": "object",
+      "properties": {
+        "affiliateUid": { "type": "string", "description": "Affiliate UID requesting withdrawal" },
+        "affiliateCode": { "type": "string", "description": "Affiliate code" },
+        "affiliateEmail": { "type": "string", "description": "Affiliate email" },
+        "amount": { "type": "number", "description": "Withdrawal amount in VND" },
+        "bankName": { "type": "string", "description": "Bank name" },
+        "bankAccountNumber": { "type": "string", "description": "Bank account number" },
+        "bankAccountName": { "type": "string", "description": "Account holder name" },
+        "status": { "type": "string", "enum": ["pending", "completed", "rejected"], "description": "Processing status" },
+        "note": { "type": "string", "description": "Admin notes or payment reference" },
+        "createdAt": { "type": "string", "description": "ISO timestamp of payout request" },
+        "processedAt": { "type": "string", "description": "ISO timestamp of processing" }
+      },
+      "required": ["affiliateUid", "amount", "bankName", "bankAccountNumber", "bankAccountName", "status"]
+    }
+  },
+  "firestore": {
+    "/affiliates/{uid}": {
+      "schema": "AffiliateProfile",
+      "description": "Affiliate profile documents keyed by user auth UID"
+    },
+    "/affiliate_orders/{orderId}": {
+      "schema": "AffiliateOrder",
+      "description": "Referral orders created when customers make purchases"
+    },
+    "/withdrawal_requests/{requestId}": {
+      "schema": "WithdrawalRequest",
+      "description": "Withdrawal requests submitted by affiliates"
+    }
+  }
+}

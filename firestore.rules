@@ -1,0 +1,73 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.email == 'marketingaimaster@gmail.com' ||
+        request.auth.token.email == 'marketingaimaster'
+      );
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Connection testing collection
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+
+    // Affiliates collection
+    match /affiliates/{userId} {
+      // Anyone can read basic affiliate profile for referral verification
+      allow read: if true;
+      
+      // Affiliate can create their own profile on register
+      allow create: if isOwner(userId);
+      
+      // Affiliate can update their own profile info, or Admin can update anything (balances, status, commission rate), or atomic clicksCount increment
+      allow update: if isOwner(userId) || isAdmin() || (
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['clicksCount', 'updatedAt', 'balancePending', 'ordersCount'])
+      );
+      
+      allow delete: if isAdmin();
+    }
+
+    // Affiliate orders collection
+    match /affiliate_orders/{orderId} {
+      // Affiliates can read orders attributed to them, admin can read all
+      allow read: if isAuthenticated() && (
+        resource.data.affiliateUid == request.auth.uid ||
+        isAdmin()
+      );
+      
+      // Allow customers to create an order from referral link
+      allow create: if request.resource.data.affiliateCode is string;
+      
+      // Allow admin or authenticated user to approve/update order status
+      allow update, delete: if isAuthenticated();
+    }
+
+    // Withdrawal requests collection
+    match /withdrawal_requests/{requestId} {
+      // Affiliates can read their own withdrawal requests, admin can read all
+      allow read: if isAuthenticated() && (
+        resource.data.affiliateUid == request.auth.uid ||
+        isAdmin()
+      );
+      
+      // Affiliates can submit their withdrawal request
+      allow create: if isAuthenticated() && request.resource.data.affiliateUid == request.auth.uid;
+      
+      // Update by admin
+      allow update: if isAuthenticated();
+      allow delete: if isAdmin();
+    }
+  }
+}

@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { PhoneCall, Facebook, ShieldCheck, Crown, Copy, Check, MessageSquare, ExternalLink, QrCode } from 'lucide-react';
 
-export const FooterSection: React.FC = () => {
+interface FooterSectionProps {
+  onOpenAffiliate?: () => void;
+}
+
+export const FooterSection: React.FC<FooterSectionProps> = ({ onOpenAffiliate }) => {
   const [copiedPhone, setCopiedPhone] = useState(false);
 
   const phoneNum = '0363.344.348';
@@ -121,6 +125,17 @@ export const FooterSection: React.FC = () => {
                   <ExternalLink className="w-3 h-3 text-purple-400" />
                 </a>
               </li>
+              {onOpenAffiliate && (
+                <li>
+                  <button
+                    onClick={onOpenAffiliate}
+                    className="flex items-center gap-2 text-amber-300 hover:text-amber-200 transition-colors font-bold text-left cursor-pointer"
+                  >
+                    <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                    <span>Cổng Kiếm Tiền CTV (Hoa Hồng 18-24%)</span>
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
 
