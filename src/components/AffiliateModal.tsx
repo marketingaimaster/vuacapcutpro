@@ -59,6 +59,7 @@ export const AffiliateModal: React.FC<AffiliateModalProps> = ({ isOpen, onClose 
   const [adminPinError, setAdminPinError] = useState<string>('');
   const [unauthorizedDomain, setUnauthorizedDomain] = useState<string | null>(null);
   const [domainCopied, setDomainCopied] = useState<boolean>(false);
+  const [emailAuthNotEnabled, setEmailAuthNotEnabled] = useState<boolean>(false);
   
   // Login / Register Form states
   const [email, setEmail] = useState('');
@@ -203,6 +204,8 @@ export const AffiliateModal: React.FC<AffiliateModalProps> = ({ isOpen, onClose 
     e.preventDefault();
     setErrorMessage('');
     setSuccessMessage('');
+    setUnauthorizedDomain(null);
+    setEmailAuthNotEnabled(false);
     setLoading(true);
 
     try {
@@ -218,7 +221,7 @@ export const AffiliateModal: React.FC<AffiliateModalProps> = ({ isOpen, onClose 
     } catch (err: any) {
       console.error('Email Auth Error:', err);
       if (err.code === 'auth/operation-not-allowed') {
-        setErrorMessage('Phương thức Email/Mật khẩu chưa được kích hoạt trên Firebase. Vui lòng mở Firebase Console -> Authentication -> Sign-in method để bật Email/Password.');
+        setEmailAuthNotEnabled(true);
       } else if (err.code === 'auth/invalid-email') {
         setErrorMessage('Địa chỉ email không đúng định dạng.');
       } else if (err.code === 'auth/weak-password') {
@@ -238,6 +241,7 @@ export const AffiliateModal: React.FC<AffiliateModalProps> = ({ isOpen, onClose 
   const handleGoogleAuth = async () => {
     setErrorMessage('');
     setUnauthorizedDomain(null);
+    setEmailAuthNotEnabled(false);
     setLoading(true);
     try {
       await signInWithGoogleAccount();
@@ -392,10 +396,74 @@ export const AffiliateModal: React.FC<AffiliateModalProps> = ({ isOpen, onClose 
         {/* Modal Body */}
         <div className="p-4 sm:p-6 overflow-y-auto flex-1 space-y-6">
           {/* Notification Messages */}
-          {errorMessage && !unauthorizedDomain && (
+          {errorMessage && !unauthorizedDomain && !emailAuthNotEnabled && (
             <div className="p-3.5 bg-rose-950/70 border border-rose-500/50 rounded-2xl flex items-center gap-2 text-rose-200 text-xs">
               <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
               <span>{errorMessage}</span>
+            </div>
+          )}
+
+          {/* Email/Password Auth Disabled Resolution Card */}
+          {emailAuthNotEnabled && (
+            <div className="p-4 sm:p-5 bg-gradient-to-br from-amber-950/90 to-purple-950/90 border-2 border-amber-500/70 rounded-2xl text-purple-100 shadow-xl space-y-3.5 animate-fadeIn">
+              <div className="flex items-start gap-3">
+                <div className="p-2 rounded-xl bg-amber-500/20 text-amber-400 shrink-0 mt-0.5">
+                  <Key className="w-5 h-5" />
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-sm sm:text-base font-black text-amber-300">
+                    Cần bật đăng nhập Email/Mật khẩu trên Firebase
+                  </h4>
+                  <p className="text-xs text-purple-200 mt-1 leading-relaxed">
+                    Firebase mặc định chỉ bật Google Login. Để CTV có thể tạo tài khoản và đăng nhập bằng Email & Mật khẩu, bạn chỉ cần gạt công tắc <strong>Email/Password</strong> trên Firebase Console một lần duy nhất (mất 15 giây).
+                  </p>
+                </div>
+              </div>
+
+              {/* 30-sec instructions */}
+              <div className="text-xs text-purple-200 space-y-2 bg-black/40 p-3.5 rounded-xl border border-purple-800/50">
+                <div className="font-bold text-amber-400 text-[11px] uppercase tracking-wider">
+                  Hướng dẫn bật trong 15 giây (3 bước):
+                </div>
+                <p className="flex items-start gap-2">
+                  <span className="w-4 h-4 rounded-full bg-amber-500/20 text-amber-300 font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">1</span>
+                  <span>Nhấn nút <strong>"Mở Cài Đặt Phương Thức Firebase"</strong> ở bên dưới.</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <span className="w-4 h-4 rounded-full bg-amber-500/20 text-amber-300 font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">2</span>
+                  <span>Trong danh sách <em>Sign-in providers</em>, bấm vào dòng <strong>Email/Password</strong>.</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <span className="w-4 h-4 rounded-full bg-amber-500/20 text-amber-300 font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">3</span>
+                  <span>Gạt công tắc <strong>Enable</strong> đầu tiên sang màu xanh ➔ Bấm <strong>Save (Lưu)</strong>.</span>
+                </p>
+              </div>
+
+              {/* Action Links */}
+              <div className="flex flex-wrap items-center gap-2 pt-1">
+                <a
+                  href={`https://console.firebase.google.com/project/${firebaseConfig.projectId}/authentication/providers`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 min-w-[200px] text-center inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-purple-950 font-black py-2.5 px-4 rounded-xl text-xs transition-all shadow-md"
+                >
+                  <span>Mở Cài Đặt Phương Thức Firebase</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEmailAuthNotEnabled(false);
+                  }}
+                  className="px-4 py-2.5 rounded-xl bg-purple-900/80 hover:bg-purple-800 text-purple-200 hover:text-white font-bold text-xs border border-purple-700/60 transition-colors cursor-pointer"
+                >
+                  Đã bật xong, Thử lại
+                </button>
+              </div>
+
+              <div className="text-[11px] text-purple-300/90 text-center pt-1 border-t border-purple-800/40">
+                🔒 <em>Sau khi lưu trên Firebase, bạn và tất cả CTV có thể tự do đăng ký & đăng nhập bằng Email/Password không giới hạn!</em>
+              </div>
             </div>
           )}
 
@@ -511,7 +579,12 @@ export const AffiliateModal: React.FC<AffiliateModalProps> = ({ isOpen, onClose 
               <div className="flex bg-purple-950/80 p-1 rounded-2xl border border-purple-800/60 mb-6">
                 <button
                   type="button"
-                  onClick={() => { setAuthMode('login'); setErrorMessage(''); }}
+                  onClick={() => { 
+                    setAuthMode('login'); 
+                    setErrorMessage(''); 
+                    setEmailAuthNotEnabled(false);
+                    setUnauthorizedDomain(null);
+                  }}
                   className={`flex-1 py-2 text-xs sm:text-sm font-bold rounded-xl transition-all ${
                     authMode === 'login'
                       ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-purple-950 shadow-md'
@@ -522,7 +595,12 @@ export const AffiliateModal: React.FC<AffiliateModalProps> = ({ isOpen, onClose 
                 </button>
                 <button
                   type="button"
-                  onClick={() => { setAuthMode('register'); setErrorMessage(''); }}
+                  onClick={() => { 
+                    setAuthMode('register'); 
+                    setErrorMessage(''); 
+                    setEmailAuthNotEnabled(false);
+                    setUnauthorizedDomain(null);
+                  }}
                   className={`flex-1 py-2 text-xs sm:text-sm font-bold rounded-xl transition-all ${
                     authMode === 'register'
                       ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-purple-950 shadow-md'
