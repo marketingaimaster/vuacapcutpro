@@ -3,7 +3,7 @@ import {
   X, Copy, Check, ExternalLink, DollarSign, Users, MousePointerClick, 
   ArrowUpRight, Wallet, Building2, CreditCard, Clock, CheckCircle2, 
   AlertCircle, LogOut, Sparkles, Share2, HelpCircle, Shield, ArrowRight,
-  TrendingUp, RefreshCw, Award, Lock, Key, Crown, Edit3, Save, QrCode, Eye
+  TrendingUp, RefreshCw, Award, Lock, Key, Crown, Edit3, Save, QrCode, Eye, Globe
 } from 'lucide-react';
 import { 
   onAuthStateChanged, 
@@ -23,6 +23,7 @@ import {
   increment
 } from 'firebase/firestore';
 import { auth, db } from '../firebase';
+import firebaseConfig from '../../firebase-applet-config.json';
 import { 
   AffiliateProfile, 
   AffiliateOrderRecord, 
@@ -53,6 +54,8 @@ export const AffiliateModal: React.FC<AffiliateModalProps> = ({ isOpen, onClose 
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [successMessage, setSuccessMessage] = useState<string>('');
   const [adminPinUnlocked, setAdminPinUnlocked] = useState<boolean>(false);
+  const [unauthorizedDomain, setUnauthorizedDomain] = useState<string | null>(null);
+  const [domainCopied, setDomainCopied] = useState<boolean>(false);
   
   // Login / Register Form states
   const [email, setEmail] = useState('');
@@ -210,8 +213,14 @@ export const AffiliateModal: React.FC<AffiliateModalProps> = ({ isOpen, onClose 
         setSuccessMessage('Tạo tài khoản CTV thành công! Chào mừng bạn gia nhập mạng lưới.');
       }
     } catch (err: any) {
-      console.error(err);
-      if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
+      console.error('Email Auth Error:', err);
+      if (err.code === 'auth/operation-not-allowed') {
+        setErrorMessage('Phương thức Email/Mật khẩu chưa được kích hoạt trên Firebase. Vui lòng mở Firebase Console -> Authentication -> Sign-in method để bật Email/Password.');
+      } else if (err.code === 'auth/invalid-email') {
+        setErrorMessage('Địa chỉ email không đúng định dạng.');
+      } else if (err.code === 'auth/weak-password') {
+        setErrorMessage('Mật khẩu quá ngắn, vui lòng nhập tối thiểu 6 ký tự.');
+      } else if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
         setErrorMessage('Email hoặc mật khẩu không chính xác.');
       } else if (err.code === 'auth/email-already-in-use') {
         setErrorMessage('Email này đã được đăng ký. Vui lòng chuyển sang tab Đăng Nhập.');
@@ -225,13 +234,30 @@ export const AffiliateModal: React.FC<AffiliateModalProps> = ({ isOpen, onClose 
 
   const handleGoogleAuth = async () => {
     setErrorMessage('');
+    setUnauthorizedDomain(null);
     setLoading(true);
     try {
       await signInWithGoogleAccount();
       setSuccessMessage('Đăng nhập Google thành công!');
     } catch (err: any) {
-      console.error(err);
-      setErrorMessage(err.message || 'Không thể đăng nhập bằng tài khoản Google.');
+      console.error('Google Auth Error:', err);
+      const isUnauthorizedDomain = 
+        err.code === 'auth/unauthorized-domain' || 
+        err.message?.includes('unauthorized-domain') ||
+        err.message?.includes('auth/unauthorized-domain');
+
+      if (isUnauthorizedDomain) {
+        const host = typeof window !== 'undefined' ? window.location.hostname : '';
+        setUnauthorizedDomain(host);
+      } else if (err.code === 'auth/popup-closed-by-user') {
+        setErrorMessage('Bạn đã đóng cửa sổ đăng nhập Google trước khi hoàn tất.');
+      } else if (err.code === 'auth/popup-blocked') {
+        setErrorMessage('Trình duyệt đã chặn cửa sổ pop-up. Vui lòng cho phép pop-up trên trình duyệt để đăng nhập Google.');
+      } else if (err.code === 'auth/cancelled-popup-request') {
+        setErrorMessage('Yêu cầu đăng nhập trước đó đã bị hủy.');
+      } else {
+        setErrorMessage(err.message || 'Không thể đăng nhập bằng tài khoản Google.');
+      }
     } finally {
       setLoading(false);
     }
@@ -358,10 +384,106 @@ export const AffiliateModal: React.FC<AffiliateModalProps> = ({ isOpen, onClose 
         {/* Modal Body */}
         <div className="p-4 sm:p-6 overflow-y-auto flex-1 space-y-6">
           {/* Notification Messages */}
-          {errorMessage && (
+          {errorMessage && !unauthorizedDomain && (
             <div className="p-3.5 bg-rose-950/70 border border-rose-500/50 rounded-2xl flex items-center gap-2 text-rose-200 text-xs">
               <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
               <span>{errorMessage}</span>
+            </div>
+          )}
+
+          {/* Unauthorized Domain Resolution Card */}
+          {unauthorizedDomain && (
+            <div className="p-4 sm:p-5 bg-gradient-to-br from-amber-950/90 to-purple-950/90 border-2 border-amber-500/70 rounded-2xl text-purple-100 shadow-xl space-y-3.5 animate-fadeIn">
+              <div className="flex items-start gap-3">
+                <div className="p-2 rounded-xl bg-amber-500/20 text-amber-400 shrink-0 mt-0.5">
+                  <Globe className="w-5 h-5" />
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-sm sm:text-base font-black text-amber-300">
+                    Tên miền chưa được cấp phép đăng nhập Google
+                  </h4>
+                  <p className="text-xs text-purple-200 mt-1 leading-relaxed">
+                    Google Firebase yêu cầu thêm tên miền đang chạy website vào danh sách <strong>Authorized domains</strong> (Miền được ủy quyền) để bảo vệ tài khoản khi đăng nhập Google.
+                  </p>
+                </div>
+              </div>
+
+              {/* Current Hostname Display & Copy */}
+              <div className="bg-purple-950/90 border border-purple-700/80 rounded-xl p-3 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
+                <div className="truncate flex-1 min-w-0">
+                  <span className="text-[11px] text-purple-400 block font-semibold">Tên miền cần thêm vào Firebase:</span>
+                  <code className="text-xs sm:text-sm font-mono font-bold text-amber-300 select-all truncate block">
+                    {unauthorizedDomain}
+                  </code>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigator.clipboard.writeText(unauthorizedDomain);
+                    setDomainCopied(true);
+                    setTimeout(() => setDomainCopied(false), 2500);
+                  }}
+                  className="shrink-0 px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-purple-950 font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md cursor-pointer"
+                >
+                  {domainCopied ? (
+                    <>
+                      <Check className="w-4 h-4 text-purple-950 stroke-[3]" />
+                      <span>Đã chép!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4" />
+                      <span>Sao chép tên miền</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {/* Step-by-step 30s instructions */}
+              <div className="text-xs text-purple-200 space-y-2 bg-black/40 p-3.5 rounded-xl border border-purple-800/50">
+                <div className="font-bold text-amber-400 text-[11px] uppercase tracking-wider">
+                  Hướng dẫn thêm miền trong 30 giây:
+                </div>
+                <p className="flex items-start gap-2">
+                  <span className="w-4 h-4 rounded-full bg-amber-500/20 text-amber-300 font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">1</span>
+                  <span>Nhấn nút <strong>"Mở Cài Đặt Firebase Console"</strong> ở bên dưới.</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <span className="w-4 h-4 rounded-full bg-amber-500/20 text-amber-300 font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">2</span>
+                  <span>Tìm mục <strong>Authorized domains</strong> (Miền được ủy quyền) ➔ Bấm <strong>Add domain</strong> (Thêm miền).</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <span className="w-4 h-4 rounded-full bg-amber-500/20 text-amber-300 font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">3</span>
+                  <span>Dán tên miền <code className="text-amber-300 bg-purple-900/80 px-1.5 py-0.5 rounded font-mono font-bold">{unauthorizedDomain}</code> và bấm <strong>Add</strong>. Sau đó quay lại đây bấm đăng nhập Google là xong!</span>
+                </p>
+              </div>
+
+              {/* Action Links */}
+              <div className="flex flex-wrap items-center gap-2 pt-1">
+                <a
+                  href={`https://console.firebase.google.com/project/${firebaseConfig.projectId}/authentication/settings`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 min-w-[200px] text-center inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-purple-950 font-black py-2.5 px-4 rounded-xl text-xs transition-all shadow-md"
+                >
+                  <span>Mở Cài Đặt Firebase Console</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setUnauthorizedDomain(null);
+                    handleGoogleAuth();
+                  }}
+                  className="px-4 py-2.5 rounded-xl bg-purple-900/80 hover:bg-purple-800 text-purple-200 hover:text-white font-bold text-xs border border-purple-700/60 transition-colors cursor-pointer"
+                >
+                  Thử lại đăng nhập Google
+                </button>
+              </div>
+
+              <div className="text-[11px] text-purple-300/90 text-center pt-1 border-t border-purple-800/40">
+                ⚡ <em>Nếu bạn cần đăng nhập hoặc tạo tài khoản CTV ngay mà không cần cấu hình domain: Hãy dùng <strong>form Email & Mật khẩu bên dưới</strong>!</em>
+              </div>
             </div>
           )}
 
