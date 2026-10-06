@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PhoneCall, Facebook, ShieldCheck, Crown, Copy, Check, MessageSquare, ExternalLink, QrCode } from 'lucide-react';
+import { PhoneCall, Facebook, ShieldCheck, Crown, Copy, Check, MessageSquare, ExternalLink, QrCode, Youtube } from 'lucide-react';
 
 interface FooterSectionProps {
   onOpenAffiliate?: () => void;
@@ -82,6 +82,48 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onOpenAffiliate })
               <ShieldCheck className="w-4 h-4" />
               <span>Bảo hành 1 đổi 1 trọn thời gian đăng ký • Hỗ trợ 24/7</span>
             </div>
+
+            {/* Quick Social Buttons */}
+            <div className="flex items-center gap-2.5 pt-1">
+              <a
+                href="https://www.youtube.com/channel/UC68P4bBXv1aNrVfVSEqexBA"
+                target="_blank"
+                rel="me noopener noreferrer"
+                title="Kênh Youtube: Vua Capcut Pro Tuấn Anh"
+                className="w-9 h-9 rounded-xl bg-red-600/15 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/30 flex items-center justify-center transition-all hover:scale-110 shadow-sm"
+              >
+                <Youtube className="w-4.5 h-4.5" />
+              </a>
+              <a
+                href="https://www.tiktok.com/@capcutprogiarenhat"
+                target="_blank"
+                rel="me noopener noreferrer"
+                title="Kênh TikTok bán hàng: Capcutpro giá rẻ"
+                className="w-9 h-9 rounded-xl bg-pink-600/15 hover:bg-pink-600 text-pink-400 hover:text-white border border-pink-500/30 flex items-center justify-center transition-all hover:scale-110 shadow-sm"
+              >
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 3 15.68 6.34 6.34 0 0 0 9.34 22a6.34 6.34 0 0 0 6.34-6.34V9.26a8.16 8.16 0 0 0 4.91 1.63v-3.7a4.85 4.85 0 0 1-1-.5z"/>
+                </svg>
+              </a>
+              <a
+                href="https://www.facebook.com/muacapcutprodienthoai?locale=vi_VN"
+                target="_blank"
+                rel="me noopener noreferrer"
+                title="Fanpage: Vua Capcutpro Chính Hãng"
+                className="w-9 h-9 rounded-xl bg-blue-600/15 hover:bg-blue-600 text-blue-400 hover:text-white border border-blue-500/30 flex items-center justify-center transition-all hover:scale-110 shadow-sm"
+              >
+                <Facebook className="w-4 h-4" />
+              </a>
+              <a
+                href="https://zalo.me/0363344348"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Zalo Hotline: 0363.344.348"
+                className="w-9 h-9 rounded-xl bg-blue-500/15 hover:bg-blue-500 text-blue-400 hover:text-white border border-blue-400/30 flex items-center justify-center transition-all hover:scale-110 shadow-sm"
+              >
+                <PhoneCall className="w-4 h-4" />
+              </a>
+            </div>
           </div>
 
           {/* Social Links & Trust Verification */}
@@ -101,12 +143,38 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onOpenAffiliate })
               </li>
               <li>
                 <a
+                  href="https://www.youtube.com/channel/UC68P4bBXv1aNrVfVSEqexBA"
+                  target="_blank"
+                  rel="me noopener noreferrer"
+                  className="flex items-center gap-2 hover:text-red-400 transition-colors group"
+                >
+                  <Youtube className="w-4 h-4 text-red-500 shrink-0 group-hover:scale-110 transition-transform" />
+                  <span>Kênh Youtube: <strong>Vua Capcut Pro Tuấn Anh</strong></span>
+                  <ExternalLink className="w-3 h-3 text-purple-400 shrink-0" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.tiktok.com/@capcutprogiarenhat"
+                  target="_blank"
+                  rel="me noopener noreferrer"
+                  className="flex items-center gap-2 hover:text-pink-300 transition-colors group"
+                >
+                  <svg className="w-4 h-4 text-pink-400 fill-current shrink-0 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 3 15.68 6.34 6.34 0 0 0 9.34 22a6.34 6.34 0 0 0 6.34-6.34V9.26a8.16 8.16 0 0 0 4.91 1.63v-3.7a4.85 4.85 0 0 1-1-.5z"/>
+                  </svg>
+                  <span>Kênh Tiktok bán hàng: <strong>Capcutpro giá rẻ</strong></span>
+                  <ExternalLink className="w-3 h-3 text-purple-400 shrink-0" />
+                </a>
+              </li>
+              <li>
+                <a
                   href="https://www.tiktok.com/@vuacapcutprotuananh"
                   target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 hover:text-amber-300 transition-colors"
+                  rel="me noopener noreferrer"
+                  className="flex items-center gap-2 hover:text-pink-300 transition-colors group"
                 >
-                  <svg className="w-4 h-4 text-pink-400 fill-current shrink-0" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 text-pink-400/80 fill-current shrink-0 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
                     <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 3 15.68 6.34 6.34 0 0 0 9.34 22a6.34 6.34 0 0 0 6.34-6.34V9.26a8.16 8.16 0 0 0 4.91 1.63v-3.7a4.85 4.85 0 0 1-1-.5z"/>
                   </svg>
                   <span>Kênh tiktok Vua capcutpro Tuấn Anh</span>
@@ -115,14 +183,14 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onOpenAffiliate })
               </li>
               <li>
                 <a
-                  href="https://www.facebook.com/profile.php?id=61592491796649&locale=vi_VN"
+                  href="https://www.facebook.com/muacapcutprodienthoai?locale=vi_VN"
                   target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 hover:text-amber-300 transition-colors"
+                  rel="me noopener noreferrer"
+                  className="flex items-center gap-2 hover:text-amber-300 transition-colors group"
                 >
-                  <Facebook className="w-4 h-4 text-blue-400" />
+                  <Facebook className="w-4 h-4 text-blue-400 shrink-0 group-hover:scale-110 transition-transform" />
                   <span>Fanpage: Vua Capcutpro Chính Hãng</span>
-                  <ExternalLink className="w-3 h-3 text-purple-400" />
+                  <ExternalLink className="w-3 h-3 text-purple-400 shrink-0" />
                 </a>
               </li>
               {onOpenAffiliate && (
