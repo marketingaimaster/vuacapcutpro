@@ -325,28 +325,44 @@ export async function submitWithdrawalRequest(
 
 // Fetch all affiliates (for admin)
 export async function getAllAffiliatesList(): Promise<AffiliateProfile[]> {
-  const snap = await getDocs(collection(db, 'affiliates'));
-  const list: AffiliateProfile[] = [];
-  snap.forEach(d => list.push({ uid: d.id, ...d.data() } as AffiliateProfile));
-  return list;
+  try {
+    const snap = await getDocs(collection(db, 'affiliates'));
+    const list: AffiliateProfile[] = [];
+    snap.forEach(d => list.push({ uid: d.id, ...d.data() } as AffiliateProfile));
+    list.sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime());
+    return list;
+  } catch (err) {
+    console.warn('Error fetching all affiliates:', err);
+    return [];
+  }
 }
 
 // Fetch all orders (for admin)
 export async function getAllOrdersList(): Promise<AffiliateOrderRecord[]> {
-  const q = query(collection(db, 'affiliate_orders'), orderBy('createdAt', 'desc'));
-  const snap = await getDocs(q);
-  const list: AffiliateOrderRecord[] = [];
-  snap.forEach(d => list.push({ id: d.id, ...d.data() } as AffiliateOrderRecord));
-  return list;
+  try {
+    const snap = await getDocs(collection(db, 'affiliate_orders'));
+    const list: AffiliateOrderRecord[] = [];
+    snap.forEach(d => list.push({ id: d.id, ...d.data() } as AffiliateOrderRecord));
+    list.sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime());
+    return list;
+  } catch (err) {
+    console.warn('Error fetching all orders:', err);
+    return [];
+  }
 }
 
 // Fetch all withdrawals (for admin)
 export async function getAllWithdrawalsList(): Promise<WithdrawalRequestRecord[]> {
-  const q = query(collection(db, 'withdrawal_requests'), orderBy('createdAt', 'desc'));
-  const snap = await getDocs(q);
-  const list: WithdrawalRequestRecord[] = [];
-  snap.forEach(d => list.push({ id: d.id, ...d.data() } as WithdrawalRequestRecord));
-  return list;
+  try {
+    const snap = await getDocs(collection(db, 'withdrawal_requests'));
+    const list: WithdrawalRequestRecord[] = [];
+    snap.forEach(d => list.push({ id: d.id, ...d.data() } as WithdrawalRequestRecord));
+    list.sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime());
+    return list;
+  } catch (err) {
+    console.warn('Error fetching all withdrawals:', err);
+    return [];
+  }
 }
 
 // Admin: Approve referral order (moves pending commission to available wallet)

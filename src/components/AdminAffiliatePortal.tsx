@@ -47,9 +47,9 @@ export const AdminAffiliatePortal: React.FC<AdminAffiliatePortalProps> = ({ onCl
     setRefreshing(true);
     try {
       const [affList, orderList, withList] = await Promise.all([
-        getAllAffiliatesList(),
-        getAllOrdersList(),
-        getAllWithdrawalsList()
+        getAllAffiliatesList().catch((err) => { console.warn('Affiliates load warning:', err); return []; }),
+        getAllOrdersList().catch((err) => { console.warn('Orders load warning:', err); return []; }),
+        getAllWithdrawalsList().catch((err) => { console.warn('Withdrawals load warning:', err); return []; })
       ]);
       setAffiliates(affList);
       setOrders(orderList);

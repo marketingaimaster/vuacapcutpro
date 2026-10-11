@@ -110,27 +110,27 @@ export const AffiliateModal: React.FC<AffiliateModalProps> = ({ isOpen, onClose 
           }
         });
 
-        // Query orders
+        // Query orders (sorted client-side to prevent missing index errors)
         const ordersQuery = query(
           collection(db, 'affiliate_orders'),
-          where('affiliateUid', '==', user.uid),
-          orderBy('createdAt', 'desc')
+          where('affiliateUid', '==', user.uid)
         );
         const unsubOrders = onSnapshot(ordersQuery, (snap) => {
           const list: AffiliateOrderRecord[] = [];
           snap.forEach((d) => list.push({ id: d.id, ...d.data() } as AffiliateOrderRecord));
+          list.sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime());
           setOrders(list);
         }, (err) => console.warn('Orders query subscription note:', err));
 
-        // Query withdrawals
+        // Query withdrawals (sorted client-side to prevent missing index errors)
         const withdrawalsQuery = query(
           collection(db, 'withdrawal_requests'),
-          where('affiliateUid', '==', user.uid),
-          orderBy('createdAt', 'desc')
+          where('affiliateUid', '==', user.uid)
         );
         const unsubWithdrawals = onSnapshot(withdrawalsQuery, (snap) => {
           const list: WithdrawalRequestRecord[] = [];
           snap.forEach((d) => list.push({ id: d.id, ...d.data() } as WithdrawalRequestRecord));
+          list.sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime());
           setWithdrawals(list);
         }, (err) => console.warn('Withdrawals query subscription note:', err));
 
