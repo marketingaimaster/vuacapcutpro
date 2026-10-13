@@ -26,7 +26,7 @@ export const VIETNAM_BANKS: BankInfo[] = [
     bin: '970407', 
     shortName: 'Techcombank', 
     name: 'Kỹ Thương Việt Nam (Techcombank)',
-    aliases: ['techcombank', 'tcb', 'ky thuong', 'kỹ thương']
+    aliases: ['techcombank', 'teckcombank', 'tcb', 'ky thuong', 'kỹ thương']
   },
   { 
     code: 'ICB', 
@@ -221,8 +221,8 @@ export function generateVietQrUrl(
     return `https://img.vietqr.io/image/${bank.bin}-${cleanAcc}-compact2.png?amount=${cleanAmount}&addInfo=${addInfo}&accountName=${accName}`;
   }
 
-  // Fallback demo QR for MB Bank Tuấn Anh if empty
-  return `https://img.vietqr.io/image/970422-0363344348-compact2.png?amount=${cleanAmount || 100000}&addInfo=${addInfo}&accountName=NGUYEN%20TUAN%20ANH`;
+  // Fallback demo QR for Techcombank Hồ Tiến Tuấn Anh if empty
+  return `https://img.vietqr.io/image/970407-8346558888-compact2.png?amount=${cleanAmount || 100000}&addInfo=${addInfo}&accountName=HO%20TIEN%20TUAN%20ANH`;
 }
 
 /**
@@ -242,5 +242,5 @@ export function generateVietQrFallbackUrl(
   if (cleanAcc) {
     return `https://img.vietqr.io/image/${bank.bin}-${cleanAcc}-qr_only.png?amount=${cleanAmount}&addInfo=${addInfo}`;
   }
-  return `https://img.vietqr.io/image/970422-0363344348-qr_only.png?amount=100000&addInfo=VuaCapcut`;
+  return `https://img.vietqr.io/image/970407-8346558888-qr_only.png?amount=100000&addInfo=VuaCapcut`;
 }

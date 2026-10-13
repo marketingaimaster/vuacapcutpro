@@ -52,7 +52,7 @@ export const OrderModal: React.FC<OrderModalProps> = ({ selection, onClose }) =>
 
   const numericPrice = parseInt(option.price.replace(/[^0-9]/g, ''), 10) || 199000;
   const memoText = `Capcut ${option.duration.replace(/\s+/g, '')} ${userPhone ? userPhone.slice(-4) : ''} ${refCode || ''}`.trim();
-  const shopVietQrUrl = generateVietQrUrl('MB', '0363344348', numericPrice, 'NGUYEN TUAN ANH', memoText);
+  const shopVietQrUrl = generateVietQrUrl('TCB', '8346558888', numericPrice, 'HO TIEN TUAN ANH', memoText);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
@@ -167,7 +167,7 @@ export const OrderModal: React.FC<OrderModalProps> = ({ selection, onClose }) =>
             className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-500/20 to-purple-600/30 hover:from-amber-500/30 hover:to-purple-600/40 text-amber-300 border border-amber-500/50 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md"
           >
             <QrCode className="w-4 h-4 text-amber-400" />
-            <span>{showBankQr ? 'Ẩn Mã QR Chuyển Khoản' : '💳 Quét Mã QR Ngân Hàng MB Thanh Toán Nhanh'}</span>
+            <span>{showBankQr ? 'Ẩn Mã QR Chuyển Khoản' : '💳 Quét Mã QR Ngân Hàng Techcombank Thanh Toán Nhanh'}</span>
           </button>
 
           {/* Bank QR Code display inside OrderModal */}
@@ -176,22 +176,22 @@ export const OrderModal: React.FC<OrderModalProps> = ({ selection, onClose }) =>
               <div className="flex items-center justify-between text-xs">
                 <span className="text-amber-300 font-bold flex items-center gap-1.5">
                   <Sparkles className="w-4 h-4 text-amber-400" />
-                  Mã VietQR Napas247 - MB Bank Tuấn Anh
+                  Mã VietQR Napas247 - Techcombank Tuấn Anh
                 </span>
                 <span className="text-[10px] text-purple-300 bg-purple-900 px-2 py-0.5 rounded font-mono">
-                  MB Bank (970422)
+                  Techcombank (970407)
                 </span>
               </div>
 
               <div className="bg-white p-3 rounded-2xl mx-auto w-56 h-auto shadow-2xl flex flex-col items-center justify-center">
                 <img
                   src={shopVietQrUrl}
-                  alt="VietQR MB Bank Tuấn Anh"
+                  alt="VietQR Techcombank Hồ Tiến Tuấn Anh"
                   className="w-full h-auto object-contain rounded-xl"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     if (!target.src.includes('qr_only')) {
-                      target.src = generateVietQrFallbackUrl('MB', '0363344348', numericPrice, memoText);
+                      target.src = generateVietQrFallbackUrl('TCB', '8346558888', numericPrice, memoText);
                     }
                   }}
                 />
@@ -200,15 +200,15 @@ export const OrderModal: React.FC<OrderModalProps> = ({ selection, onClose }) =>
               <div className="text-xs text-purple-200 space-y-1.5 bg-purple-950/60 p-3 rounded-xl border border-purple-800/60 text-left">
                 <div className="flex justify-between items-center">
                   <span className="text-purple-300">Ngân hàng:</span>
-                  <strong className="text-white">MB Bank (Quân Đội)</strong>
+                  <strong className="text-white">Techcombank (Kỹ Thương)</strong>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-purple-300">Số tài khoản:</span>
                   <div className="flex items-center gap-1.5">
-                    <strong className="text-amber-300 font-mono text-sm select-all">0363344348</strong>
+                    <strong className="text-amber-300 font-mono text-sm select-all">8346558888</strong>
                     <button
                       onClick={() => {
-                        navigator.clipboard.writeText('0363344348');
+                        navigator.clipboard.writeText('8346558888');
                         setCopiedStk(true);
                         setTimeout(() => setCopiedStk(false), 2000);
                       }}
@@ -221,7 +221,7 @@ export const OrderModal: React.FC<OrderModalProps> = ({ selection, onClose }) =>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-purple-300">Chủ tài khoản:</span>
-                  <strong className="text-white uppercase">NGUYEN TUAN ANH</strong>
+                  <strong className="text-white uppercase">HỒ TIẾN TUẤN ANH</strong>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-purple-300">Số tiền:</span>

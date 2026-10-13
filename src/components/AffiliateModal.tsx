@@ -87,7 +87,7 @@ export const AffiliateModal: React.FC<AffiliateModalProps> = ({ isOpen, onClose 
 
   // Withdrawal form & QR Preview Test
   const [withdrawAmount, setWithdrawAmount] = useState<string>('');
-  const [bankName, setBankName] = useState<string>('MB Bank');
+  const [bankName, setBankName] = useState<string>('Techcombank');
   const [bankAccountNumber, setBankAccountNumber] = useState<string>('');
   const [bankAccountName, setBankAccountName] = useState<string>('');
   const [withdrawSubmitting, setWithdrawSubmitting] = useState<boolean>(false);
@@ -1241,9 +1241,9 @@ export const AffiliateModal: React.FC<AffiliateModalProps> = ({ isOpen, onClose 
                         const testAmount = Math.max(100000, Number(withdrawAmount) || 100000);
                         const qrUrl = generateVietQrUrl(
                           bankName,
-                          bankAccountNumber || '0363344348',
+                          bankAccountNumber || '8346558888',
                           testAmount,
-                          bankAccountName || 'NGUYEN VAN MINH',
+                          bankAccountName || 'HO TIEN TUAN ANH',
                           `VuaCapcut ${profile?.affiliateCode || 'CTV'}`
                         );
 
@@ -1270,7 +1270,7 @@ export const AffiliateModal: React.FC<AffiliateModalProps> = ({ isOpen, onClose 
                                   if (!target.src.includes('qr_only')) {
                                     target.src = generateVietQrFallbackUrl(
                                       bankName,
-                                      bankAccountNumber || '0363344348',
+                                      bankAccountNumber || '8346558888',
                                       testAmount,
                                       `VuaCapcut ${profile?.affiliateCode || 'CTV'}`
                                     );

@@ -47,6 +47,6 @@ export const faqList: FAQItem[] = [
     id: 'faq-7',
     category: 'thanh-toan',
     question: 'Tôi có thể thanh toán qua những hình thức nào?',
-    answer: 'Bạn có thể thanh toán linh hoạt qua Chuyển khoản ngân hàng 24/7 (Vietcombank, MB Bank, Techcombank, VPBank...), Ví MoMo, ZaloPay hoặc Viettel Money. Sau khi chuyển khoản xong chụp màn hình gửi Zalo shop sẽ kích hoạt ngay.'
+    answer: 'Bạn có thể thanh toán qua Chuyển khoản ngân hàng 24/7 trực tiếp tới Techcombank (STK: 8346558888 - Chủ TK: Hồ Tiến Tuấn Anh) bằng mã VietQR quét tự động cực nhanh, hoặc qua Ví MoMo, ZaloPay. Sau khi chuyển khoản chụp bill gửi Zalo 0363.344.348 là shop kích hoạt ngay trong 1-3 phút.'
   }
 ];

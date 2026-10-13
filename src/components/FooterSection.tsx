@@ -7,6 +7,7 @@ interface FooterSectionProps {
 
 export const FooterSection: React.FC<FooterSectionProps> = ({ onOpenAffiliate }) => {
   const [copiedPhone, setCopiedPhone] = useState(false);
+  const [copiedBank, setCopiedBank] = useState(false);
 
   const phoneNum = '0363.344.348';
 
@@ -207,22 +208,56 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onOpenAffiliate })
             </ul>
           </div>
 
-          {/* Zalo Fast QR Code Box */}
-          <div className="bg-[#120528] p-4 rounded-2xl border border-purple-800/60 text-center space-y-2">
-            <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-amber-300">
-              <QrCode className="w-4 h-4" />
-              <span>Mã QR Zalo Tuấn Anh</span>
+          {/* Official Bank Account & Fast QR Box */}
+          <div className="bg-[#120528] p-4 rounded-2xl border-2 border-amber-500/50 text-center space-y-2.5 shadow-xl">
+            <div className="flex items-center justify-between text-xs font-bold text-amber-300">
+              <span className="flex items-center gap-1.5">
+                <QrCode className="w-4 h-4 text-amber-400" />
+                <span>VietQR Techcombank</span>
+              </span>
+              <span className="text-[10px] bg-red-600/30 text-red-300 px-2 py-0.5 rounded font-mono border border-red-500/40">
+                TCB (970407)
+              </span>
             </div>
-            <div className="w-28 h-28 bg-white p-2 rounded-xl mx-auto shadow-inner flex items-center justify-center">
-              {/* Clean Zalo QR Placeholder Visual */}
+
+            <div className="w-32 h-32 bg-white p-2 rounded-xl mx-auto shadow-md flex items-center justify-center">
               <img
-                src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://zalo.me/0363344348"
-                alt="Zalo QR Code"
+                src="https://img.vietqr.io/image/970407-8346558888-compact2.png?amount=199000&addInfo=VuaCapcut%20Pro&accountName=HO%20TIEN%20TUAN%20ANH"
+                alt="VietQR Techcombank Hồ Tiến Tuấn Anh 8346558888"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-contain"
               />
             </div>
-            <p className="text-[11px] text-purple-300/80">Quét mã bằng camera điện thoại để mở Zalo chat nhanh</p>
+
+            <div className="text-[11px] text-purple-200 bg-purple-950/80 p-2.5 rounded-xl border border-purple-800/60 text-left space-y-1">
+              <div>
+                <span className="text-purple-400 text-[10px] block">Ngân hàng:</span>
+                <strong className="text-white">Techcombank</strong>
+              </div>
+              <div>
+                <span className="text-purple-400 text-[10px] block">Số tài khoản:</span>
+                <div className="flex items-center justify-between">
+                  <strong className="text-amber-300 font-mono text-xs select-all">8346558888</strong>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText('8346558888');
+                      setCopiedBank(true);
+                      setTimeout(() => setCopiedBank(false), 2000);
+                    }}
+                    className="p-1 hover:bg-purple-800 rounded text-purple-300 hover:text-white transition-colors"
+                    title="Sao chép STK"
+                  >
+                    {copiedBank ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                  </button>
+                </div>
+              </div>
+              <div>
+                <span className="text-purple-400 text-[10px] block">Chủ tài khoản:</span>
+                <strong className="text-white uppercase text-[10px]">HỒ TIẾN TUẤN ANH</strong>
+              </div>
+            </div>
+
+            <p className="text-[10px] text-purple-300/80">Quét mã bằng app ngân hàng bất kỳ để thanh toán 24/7</p>
           </div>
 
         </div>
